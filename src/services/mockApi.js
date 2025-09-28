@@ -1,3 +1,4 @@
+// --- Real Twilio Implementation ---
 export async function sendSosAlert(payload) {
   // Call your serverless endpoint
   const res = await fetch("/api/sos", {
@@ -6,8 +7,24 @@ export async function sendSosAlert(payload) {
     body: JSON.stringify(payload),
   });
   if (!res.ok) {
+    // Attempt to read server error response
     const text = await res.text();
-    throw new Error("Server error: " + text);
+    throw new Error("SOS Alert Server error: " + text);
   }
   return res.json();
 }
+
+// --- Placeholder for Missing Function (Fixes Build Error) ---
+// This function is required by src/components/NetworkingHub.jsx
+// It should return an array of community objects.
+export function getCommunities() {
+  // Return mock data for the NetworkingHub to avoid the build failure
+  return [
+    { id: 1, name: "Local Safety Group A", members: 45, type: "Neighborhood" },
+    { id: 2, name: "Women's Tech Hub B", members: 120, type: "Professional" },
+    { id: 3, name: "Campus Safety C", members: 78, type: "Educational" },
+  ];
+}
+
+// NOTE: Add any other functions that were in your original mockApi.js here
+// and ensure they are also exported.
