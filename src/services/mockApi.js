@@ -1,18 +1,13 @@
-export function getCommunities() {
-  return [
-    { id: 1, name: "Women in Tech SA" },
-    { id: 2, name: "AI Founders" },
-  ];
-}
-
-export function getMentors() {
-  return [
-    { id: 1, name: "Thandi Ndlovu", expertise: "Cybersecurity" },
-    { id: 2, name: "Aisha Khan", expertise: "AI & Machine Learning" },
-  ];
-}
-
 export async function sendSosAlert(payload) {
-  console.log("SOS Payload:", payload);
-  return new Promise((resolve) => setTimeout(resolve, 1000));
+  // Call your serverless endpoint
+  const res = await fetch("/api/sos", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error("Server error: " + text);
+  }
+  return res.json();
 }
