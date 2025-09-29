@@ -8,10 +8,9 @@
  * TWILIO_FROM_NUMBER
  * TRUSTED_CONTACTS   (comma-separated, e.g. +27831234567,+27831112222)
  */
-import twilio from "twilio"; // <--- CRITICAL FIX: Use 'import'
+import twilio from "twilio";
 
 export default async function (req, res) {
-  // <--- CRITICAL FIX: Use 'export default'
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed" });
@@ -37,14 +36,12 @@ export default async function (req, res) {
 
     const client = twilio(accountSid, authToken);
 
-    // VITAL FIX: Correct Google Maps URL and message body
     const locationText = coords
       ? `Location: https://www.google.com/maps/search/?api=1&query=${coords.latitude},${coords.longitude}`
       : "Location unavailable";
 
     const userName = user.name ? user.name.trim() : "Unknown User";
     const messageBody = `SOS Emergency Alert from ${userName}. ${locationText}`;
-    // END VITAL FIX
 
     const results = [];
     for (const to of contacts) {
